@@ -1,0 +1,44 @@
+***IN THIS SQL QUERY, I'M UTILIZING A DATABASE ON SCHOOLS, CRIME, and COMUNNITIES IN THE CHICAGO AREA***
+
+--Find the total number of crimes recorded in the CRIME table.--
+SELECT COUNT(PRIMARY_TYPE) AS CRIME_TYPE FROM CHICAGO_CRIME_DATA;
+
+--Retrieve first 10 rows from the CRIME table.--
+SELECT * FROM chicago_crime_data LIMIT 10;
+
+--How many crimes involve an arrest?--
+SELECT count(primary_type) AS CRIME from chicago_crime_data 
+WHERE ARREST = TRUE;
+
+--Which unique types of crimes have been recorded at GAS STATION locations?--
+select DISTINCT(PRIMARY_TYPE) AS CRIME FROM chicago_crime_data 
+WHERE location_description = 'GAS STATION';
+
+--CENSUS DATA QUERY--
+--In the CENUS_DATA table list all Community Areas whose names start with the letter ‘B’--
+SELECT * from chicago_census_data;
+
+SELECT DISTINCT(COMMUNITY_AREA_NAME) FROM chicago_census_data 
+WHERE COMMUNITY_AREA_NAME LIKE 'B%';
+--Which schools in Community Areas 10 to 15 are healthy school certified?--
+SELECT * FROM chicago_public_schools;
+
+SELECT NAME_OF_SCHOOL FROM chicago_public_schools WHERE COMMUNITY_AREA_NUMBER BETWEEN 10 AND 15
+AND HEALTHY_SCHOOL_CERTIFIED = 'Yes';
+
+--What is the average school Safety Score?--
+SELECT AVG(SAFETY_SCORE) AS AVG_SAFETY_SCORE FROM chicago_public_schools;
+
+--List the top 5 Community Areas by average College Enrollment [number of students]--
+SELECT community_area_name,(select AVG(COLLEGE_ENROLLMENT) FROM chicago_public_schools) AS AVG_COLLEGE_ENROLLMENT 
+FROM chicago_public_schools ORDER BY AVG_COLLEGE_ENROLLMENT LIMIT 5;
+
+--Use a sub-query to determine which Community Area has the least value for school Safety Score?--
+SELECT community_area_name, (select min(SAFETY_SCORE) FROM chicago_public_schools) AS LOW_SCORE FROM chicago_public_schools 
+ORDER BY SAFETY_SCORE DESC;
+
+--Find the Per Capita Income of the Community Area which has a school Safety Score of 1.--
+SELECT * FROM chicago_census_data;
+SELECT per_capita_income, community_area_name FROM chicago_census_data WHERE community_area_number IN 
+(select SAFETY_SCORE from chicago_public_schools WHERE safety_score = 1);
+
