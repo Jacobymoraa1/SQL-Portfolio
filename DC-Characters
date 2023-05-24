@@ -1,0 +1,61 @@
+CREATE TABLE DC_Characters ( 
+ID INTEGER PRIMARY KEY,
+name TEXT,
+age INTEGER,
+gender TEXT,
+team TEXT,
+current_status TEXT,
+affliation TEXT,
+height_cm NUMERIC,
+weight_kg NUMERIC
+);
+
+/*Insert New column that includes heroes alter ego*/
+ALTER TABLE DC_Characters
+ADD COLUMN alter_ego TEXT;
+
+/* Change name of 'Name' column to 'Hero_name*/
+ALTER TABLE DC_Characters
+RENAME column name TO Hero_name;
+
+INSERT INTO DC_Characters VALUES(1,'Superman',33,'Male','Justice League','Alive','Good',198.2,107,'Clark Kent');
+INSERT INTO DC_Characters VALUES(2,'Batman',38,'Male','Justice League','Alive','Good',189,97,'Bruce Wayne');
+INSERT INTO DC_Characters VALUES(3,'Wonder Woman',5000,'Female','Justice League','Alive','Good',182,75,'Diana Prince');
+INSERT INTO DC_Characters VALUES(4,'The Flash',26,'Male','Justice League','Alive','Good',182,88,'Barry Allen');
+INSERT INTO DC_Characters VALUES(5,'Harley Quinn',25,'Female','Suicide Squad','Alive','Evil',173,52,'Harleen Quiinzel');
+INSERT INTO DC_Characters VALUES(6,'Catwoman',30,'Female','None','Alive','Good',173,58,'Selina Kyle');
+INSERT INTO DC_Characters VALUES(7,'Nightwing',26,'Male,','Titans','Deceased','Good',182,79,'Dick Grayson');
+INSERT INTO DC_Characters VALUES(8,'The Joker',44,'Male','None','Deceased','Evil',198,87,'Unknown');
+INSERT INTO DC_Characters VALUES(9,'Darkseid',500000,'Male','None','Alive','Evil',272,823,'Uxas');
+INSERT INTO DC_Characters VALUES(10,'Cheetah',32,'Female','Suicide Squad','Alive','Evil',179,64,'Barbara Minerva');
+INSERT INTO DC_Characters VALUES(11,'Poison Ivy',29,'Female','The Green','Alive','Neutral',172,52,'Pamela Isley');
+INSERT INTO DC_Characters VALUES(12,'Black Adam',4500,'Male','None','Alive','Neutral',190,113,'Teth-Adam');
+INSERT INTO DC_Characters VALUES(13,'Shazam',14,'Male','Justice League','Deceased','Good',187,98,'Billy Batson');
+INSERT INTO DC_Characters VALUES(14,'Green Lantern',28,'Male','Lantern Corps','Alive','Good',187,84,'Hal Jordan');
+INSERT INTO DC_Characters VALUES(15,'Sinestro',30,'Male','Yellow Lantern Corps','Deceased','Evil',200,93,'N/A');
+INSERT INTO DC_Characters VALUES(16,'Deadshot',40,'Male','Suicide Squad','Alive','Neutral',185,92,'Floyd Lawton');
+INSERT INTO DC_Characters VALUES(17,'Deathstroke',57,'Male','None','Deceased','Neutral',193,102,'Slade Wilson');
+INSERT INTO DC_Characters VALUES(18,'Starfire',21,'Female','Teen Titans','Alive','Good',193,72,'Kory Anders');
+INSERT INTO DC_Characters VALUES(19,'Raven',18,'Female','Teen Titans','Alive','Good',180,63,'Rachel Roth');
+INSERT INTO DC_Characters VALUES(20,'Robin',14,'Male','Teen Titans','Alive','Good',162,64,'Damian Wayne');
+
+SELECT * FROM dc_characters;
+
+/*Find name and order height of heros under age of 30*/
+SELECT age, hero_name, height_cm FROM dc_characters
+WHERE age < 30
+ORDER BY age;
+
+/*Find heroes associated with Teen Titans*/
+SELECT hero_name, team FROM dc_characters
+WHERE team = 'Teen Titans'
+ORDER BY hero_name;
+
+/* The Flash was in a fight with a foe and has gone missing, update current status to 'Missing'*/
+UPDATE dc_characters
+SET current_status = 'Missing'
+WHERE id = 4;
+
+SELECT hero_name, current_status
+FROM dc_characters
+WHERE id = 4;
