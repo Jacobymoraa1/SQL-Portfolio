@@ -1,2 +1,2 @@
-# legendary-meme
+# SQL-Portfolio
 A collection of sample SQL files
